@@ -1,0 +1,30 @@
+public class Gun : MonoBehaviour
+{
+    public GameObject bulletPrefab;
+    public Transform barrelEnd; // The end point of the gun barrel
+
+    public float bulletSpeed = 10f;
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Example: Fire when the player presses the spacebar
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FireBullet();
+        }
+    }
+
+    void FireBullet()
+    {
+        // Instantiate a new bullet
+        GameObject bullet = Instantiate(bulletPrefab, barrelEnd.position, Quaternion.identity);
+
+        // Calculate the direction from the gun barrel to the point you want to aim at
+        Vector2 direction = (/* Point you want to aim at */ - barrelEnd.position).normalized;
+
+        // Set the velocity of the bullet in that direction
+        Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
+        bulletRB.velocity = direction * bulletSpeed;
+    }
+}
